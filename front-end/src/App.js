@@ -5,15 +5,15 @@ import {
   Route
 } from "react-router-dom";
 
-const Loading = () => (
-  <div>Loading...</div>
-  );
-  
-const LazyWrapper = (Component) => (props) => (
-  <Suspense fallback={<Loading />}>
+function Loading() {
+  return <div>Loading...</div>
+}
+
+const LazyWrapper = (Component) => function(props) {
+  return <Suspense fallback={<Loading />}>
     <Component {...props} />
   </Suspense>
-)
+}
 
 const Timeline = LazyWrapper(lazy(() => import("./pages/Timeline")));
 const Home = LazyWrapper(lazy(() => import("./pages/Timeline/Home")));
