@@ -2,6 +2,7 @@ import app from "../src/app";
 import supertest from "supertest";
 import { prisma } from "../src/database";
 import * as fakerRecommendations from "./factories/fakerRecommendations";
+import * as createRecommendations from "./factories/createRecommendations";
 
 console.log(process.env.DATABASE_URL);
 
@@ -27,6 +28,13 @@ describe(`POST ${PATH}`, () => {
     const result = await request.post(`${PATH}`).send(body);
     const status = result.status;
     expect(status).toEqual(422);
+  });
+  it("should return 409, recommendation already exists", async () => {
+    const body = fakerRecommendations.correct;
+    await createRecommendations.one(body);
+    const result = await request.post(`${PATH}`).send(body);
+    const status = result.status;
+    expect(status).toEqual(409);
   });
 });
 
