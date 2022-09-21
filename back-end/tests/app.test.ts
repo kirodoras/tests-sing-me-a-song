@@ -53,4 +53,9 @@ describe(`GET ${PATH}/random`, () => {
     const status = result.status;
     expect(status).toEqual(200);
   });
+  it("should return 404, there are no recommendations", async () => {
+    const result = await request.get(`${PATH}/random`);
+    const status = result.status;
+    expect(status).toEqual(404);
+  });
 });
