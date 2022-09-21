@@ -6,3 +6,10 @@ export function one(recommendation: CreateRecommendationData) {
     data: recommendation,
   });
 }
+
+export function many(recommendations: CreateRecommendationData[]) {
+  return prisma.recommendation.createMany({
+    data: recommendations,
+    skipDuplicates: true,
+  });
+}
