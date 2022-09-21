@@ -7,6 +7,7 @@ const PATH = "http://localhost:3001";
 beforeEach(() => {
   cy.visit(`${PATH}/`);
 });
+
 describe('Add new recommendation', () => {
   it('should add successfully', () => {
     cy.intercept("GET", "http://localhost:5009/recommendations").as("getPosts");
@@ -26,6 +27,16 @@ describe('Navigate to /top', () => {
     cy.get('[data-cy="top"]').click();
     cy.wait("@getTop");
     cy.url().should('include', '/top');
+    cy.wait(500);
+  });
+});
+
+describe('Navigate to /random', () => {
+  it('should navigate successfully', () => {
+    cy.intercept("GET", "http://localhost:5009/recommendations/random").as("getRandom");
+    cy.get('[data-cy="random"]').click();
+    cy.wait("@getRandom");
+    cy.url().should('include', '/random');
     cy.wait(500);
   });
 });
