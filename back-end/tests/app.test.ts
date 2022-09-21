@@ -102,4 +102,10 @@ describe(`POST ${PATH}/:id/upvote`, () => {
     const status = result.status;
     expect(status).toEqual(200);
   });
+  it("should return 404, id not found", async () => {
+    const id = 999999;
+    const result = await request.post(`${PATH}/${id}/upvote`);
+    const status = result.status;
+    expect(status).toEqual(404);
+  });
 });
