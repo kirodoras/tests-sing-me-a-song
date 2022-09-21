@@ -40,3 +40,13 @@ describe('Navigate to /random', () => {
     cy.wait(500);
   });
 });
+
+describe('Navigate to /home', () => {
+  it('should navigate successfully', () => {
+    cy.intercept("GET", "http://localhost:5009/recommendations").as("getPosts");
+    cy.get('[data-cy="home"]').click();
+    cy.wait("@getPosts");
+    cy.url().should('include', '/');
+    cy.wait(500);
+  });
+});
