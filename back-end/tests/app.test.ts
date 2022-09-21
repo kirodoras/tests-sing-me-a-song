@@ -48,7 +48,7 @@ describe(`GET ${PATH}`, () => {
 
 describe(`GET ${PATH}/random`, () => {
   it("should return 200", async () => {
-    await createRecommendations.many(fakerRecommendations.correctMany);
+    await createRecommendations.many(5);
     const result = await request.get(`${PATH}/random`);
     const status = result.status;
     expect(status).toEqual(200);
@@ -57,5 +57,16 @@ describe(`GET ${PATH}/random`, () => {
     const result = await request.get(`${PATH}/random`);
     const status = result.status;
     expect(status).toEqual(404);
+  });
+});
+
+describe(`GET ${PATH}/top/:amount`, () => {
+  it("should return 200", async () => {
+    const amount = 3;
+    await createRecommendations.many(5);
+    const result = await request.get(`${PATH}/top/${amount}`);
+    const status = result.status;
+    expect(status).toEqual(200);
+    expect(result.body.length).toEqual(amount);
   });
 });
