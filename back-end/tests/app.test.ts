@@ -1,7 +1,7 @@
 import app from "../src/app";
 import supertest from "supertest";
 import { prisma } from "../src/database";
-import { fakerRecommendation } from "./factories/fakerRecommendations";
+import * as fakerRecommendations from "./factories/fakerRecommendations";
 
 console.log(process.env.DATABASE_URL);
 
@@ -17,10 +17,16 @@ const PATH = "/recommendations";
 
 describe(`POST ${PATH}`, () => {
   it("should return 201", async () => {
-    const body = fakerRecommendation;
+    const body = fakerRecommendations.correct;
     const result = await request.post(`${PATH}`).send(body);
     const status = result.status;
     expect(status).toEqual(201);
+  });
+  it("should return 422, wrong link", async () => {
+    const body = fakerRecommendations.wrongLink;
+    const result = await request.post(`${PATH}`).send(body);
+    const status = result.status;
+    expect(status).toEqual(422);
   });
 });
 
