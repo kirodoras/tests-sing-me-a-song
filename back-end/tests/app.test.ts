@@ -69,4 +69,11 @@ describe(`GET ${PATH}/top/:amount`, () => {
     expect(status).toEqual(200);
     expect(result.body.length).toEqual(amount);
   });
+  it("should return 200, there are no recommendations", async () => {
+    const amount = 3;
+    const result = await request.get(`${PATH}/top/${amount}`);
+    const status = result.status;
+    expect(status).toEqual(200);
+    expect(result.body.length).not.toEqual(amount);
+  });
 });
