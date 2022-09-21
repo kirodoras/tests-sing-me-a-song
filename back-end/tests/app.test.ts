@@ -109,3 +109,13 @@ describe(`POST ${PATH}/:id/upvote`, () => {
     expect(status).toEqual(404);
   });
 });
+
+describe(`POST ${PATH}/:id/downvote`, () => {
+  it("should return 200", async () => {
+    const recommendation = fakerRecommendations.correct;
+    const { id } = await createRecommendations.one(recommendation);
+    const result = await request.post(`${PATH}/${id}/downvote`);
+    const status = result.status;
+    expect(status).toEqual(200);
+  });
+});
