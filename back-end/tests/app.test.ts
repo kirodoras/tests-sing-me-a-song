@@ -45,3 +45,12 @@ describe(`GET ${PATH}`, () => {
     expect(status).toEqual(200);
   });
 });
+
+describe(`GET ${PATH}/random`, () => {
+  it("should return 200", async () => {
+    await createRecommendations.many(fakerRecommendations.correctMany);
+    const result = await request.get(`${PATH}/random`);
+    const status = result.status;
+    expect(status).toEqual(200);
+  });
+});
