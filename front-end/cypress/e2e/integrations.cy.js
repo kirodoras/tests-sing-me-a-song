@@ -16,5 +16,16 @@ describe('Add new recommendation', () => {
     cy.get('[data-cy="submitNew"]').click();
     cy.wait("@getPosts");
     cy.get('[data-cy="linkName"]').should('contain', linkName);
+    cy.wait(500);
+  });
+});
+
+describe('Navigate to /top', () => {
+  it('should navigate successfully', () => {
+    cy.intercept("GET", "http://localhost:5009/recommendations/top/10").as("getTop");
+    cy.get('[data-cy="top"]').click();
+    cy.wait("@getTop");
+    cy.url().should('include', '/top');
+    cy.wait(500);
   });
 });
