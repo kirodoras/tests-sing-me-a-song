@@ -5,7 +5,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "build": "tsc && npx prisma migrate deploy && npm run seed",
+    "start": "node ./dist/src/server.js",
+    "dev": "npx nodemon ./src/server.ts",
+    "migrate": "npx prisma migrate dev",
+    "studio": "npx prisma studio",
+    "lint": "eslint ./src --ext .ts",
+    "lint:fix": "eslint ./src --ext .ts --fix",
+    "test": "dotenv -e .env.test jest -i --no-cache",
+    "test:migrate": "dotenv -e .env.test prisma migrate dev",
+    "test:studio": "dotenv -e .env.test npx prisma studio"
   },
   "keywords": [],
   "author": "",
