@@ -10,11 +10,3 @@ export const wrongLink: CreateRecommendationData = {
   name: faker.lorem.word(2),
   youtubeLink: "https://XXXXXXXXXX/XXXXXXXXX",
 };
-
-export const correctMany: CreateRecommendationData[] = [
-  correct,
-  correct,
-  correct,
-  correct,
-  correct,
-];
