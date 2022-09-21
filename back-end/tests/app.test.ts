@@ -77,3 +77,13 @@ describe(`GET ${PATH}/top/:amount`, () => {
     expect(result.body.length).not.toEqual(amount);
   });
 });
+
+describe(`GET ${PATH}/:id`, () => {
+  it("should return 200", async () => {
+    const recommendation = fakerRecommendations.correct;
+    const { id } = await createRecommendations.one(recommendation);
+    const result = await request.get(`${PATH}/${id}`);
+    const status = result.status;
+    expect(status).toEqual(200);
+  });
+});
