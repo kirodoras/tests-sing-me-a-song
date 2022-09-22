@@ -76,3 +76,16 @@ describe("Unit tests [get] function in recommendationService", () => {
     expect(result).toBe(true);
   });
 });
+
+describe("Unit tests [getTop] function in recommendationService", () => {
+  it("should pass to get recommendations by amount", async () => {
+    const amount = 10;
+    jest
+      .spyOn(recommendationRepository, "getAmountByScore")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    const result = await recommendationService.getTop(amount);
+    expect(result).toBe(true);
+  });
+});
