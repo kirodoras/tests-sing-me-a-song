@@ -72,3 +72,23 @@ describe('Upvote recommendation', () => {
     });
   });
 });
+
+describe('Downvote recommendation', () => {
+  it('should downvote successfully', () => {
+    cy.intercept("GET", `${PATH_BACK}/recommendations`).as("getPosts");
+    const linkName = faker.lorem.words(2);
+    cy.get('[data-cy="name"]').type(linkName);
+    cy.get('[data-cy="youtubeLink"]').type("https://youtu.be/Tu4sXwpY6S0");
+    cy.get('[data-cy="submitNew"]').click();
+    cy.wait("@getPosts");
+    cy.get('[data-cy="linkName"]').should('contain', linkName);
+    cy.wait(500);
+    cy.get('[data-cy="score"]').invoke('text').then(parseInt).then((prev) => {
+      cy.get('[data-cy="downvote-button"]').click();
+      cy.wait(1000);
+      cy.get('[data-cy="score"]').invoke('text').then(parseInt).then((next) => {
+        expect(next).to.equal(prev - 1);
+      });
+    });
+  });
+});
