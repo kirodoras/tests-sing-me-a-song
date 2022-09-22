@@ -13,7 +13,7 @@
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "eslint ./src --ext .ts --fix",
     "test": "dotenv -e .env.test jest tests/app.test.ts -i --no-cache",
-    "test:units": "dotenv -e .env.test jest tests/units.test.ts -i --coverage",
+    "test:unit": "dotenv -e .env.test jest tests/units.test.ts -i --coverage",
     "test:dev": "dotenv -e .env.test npx nodemon ./src/server.ts",
     "test:migrate": "dotenv -e .env.test prisma migrate dev",
     "test:studio": "dotenv -e .env.test npx prisma studio"
