@@ -55,14 +55,7 @@ describe('Navigate to /home', () => {
 
 describe('Upvote recommendation', () => {
   it('should upvote successfully', () => {
-    cy.intercept("GET", `${PATH_BACK}/recommendations`).as("getPosts");
-    const linkName = faker.lorem.words(2);
-    cy.get('[data-cy="name"]').type(linkName);
-    cy.get('[data-cy="youtubeLink"]').type("https://youtu.be/Tu4sXwpY6S0");
-    cy.get('[data-cy="submitNew"]').click();
-    cy.wait("@getPosts");
-    cy.get('[data-cy="linkName"]').should('contain', linkName);
-    cy.wait(500);
+    cy.createRecommendation(PATH_BACK, faker.lorem.words(2));
     cy.get('[data-cy="score"]').invoke('text').then(parseInt).then((prev) => {
       cy.get('[data-cy="upvote-button"]').click();
       cy.wait(1000);
@@ -75,14 +68,7 @@ describe('Upvote recommendation', () => {
 
 describe('Downvote recommendation', () => {
   it('should downvote successfully', () => {
-    cy.intercept("GET", `${PATH_BACK}/recommendations`).as("getPosts");
-    const linkName = faker.lorem.words(2);
-    cy.get('[data-cy="name"]').type(linkName);
-    cy.get('[data-cy="youtubeLink"]').type("https://youtu.be/Tu4sXwpY6S0");
-    cy.get('[data-cy="submitNew"]').click();
-    cy.wait("@getPosts");
-    cy.get('[data-cy="linkName"]').should('contain', linkName);
-    cy.wait(500);
+    cy.createRecommendation(PATH_BACK, faker.lorem.words(2));
     cy.get('[data-cy="score"]').invoke('text').then(parseInt).then((prev) => {
       cy.get('[data-cy="downvote-button"]').click();
       cy.wait(1000);
@@ -95,14 +81,7 @@ describe('Downvote recommendation', () => {
 
 describe('iframe', () => {
   it('should visible successfully', () => {
-    cy.intercept("GET", `${PATH_BACK}/recommendations`).as("getPosts");
-    const linkName = faker.lorem.words(2);
-    cy.get('[data-cy="name"]').type(linkName);
-    cy.get('[data-cy="youtubeLink"]').type("https://youtu.be/Tu4sXwpY6S0");
-    cy.get('[data-cy="submitNew"]').click();
-    cy.wait("@getPosts");
-    cy.get('[data-cy="linkName"]').should('contain', linkName);
-    cy.wait(500);
+    cy.createRecommendation(PATH_BACK, faker.lorem.words(2));
     cy.get('[data-cy="player"]')
       .find('iframe')
       .should('be.visible');
