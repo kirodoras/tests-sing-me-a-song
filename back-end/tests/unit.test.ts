@@ -8,7 +8,7 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
-describe("Unit tests INSERT function in recommendationService", () => {
+describe("Unit tests insert function in recommendationService", () => {
   it("should pass to create", async () => {
     const recommendation = fakerRecommendations.correct;
     jest
@@ -35,6 +35,32 @@ describe("Unit tests INSERT function in recommendationService", () => {
       await recommendationService.insert(recommendation);
     } catch (err) {
       expect(err.type).toBe("conflict");
+    }
+  });
+});
+
+describe("Unit tests getById function in recommendationService", () => {
+  it("should pass to get recommendation by id", async () => {
+    const id = 999;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    const result = await recommendationService.getById(id);
+    expect(result).toBe(true);
+  });
+  it("should pass to fail in get recommendation by id", async () => {
+    const id = 999;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return false;
+      });
+    try {
+      await recommendationService.getById(id);
+    } catch (err) {
+      expect(err.type).toBe("not_found");
     }
   });
 });
