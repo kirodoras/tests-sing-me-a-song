@@ -8,7 +8,7 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
-describe("Unit tests insert function in recommendationService", () => {
+describe("Unit tests [insert] function in recommendationService", () => {
   it("should pass to create", async () => {
     const recommendation = fakerRecommendations.correct;
     jest
@@ -39,7 +39,7 @@ describe("Unit tests insert function in recommendationService", () => {
   });
 });
 
-describe("Unit tests getById function in recommendationService", () => {
+describe("Unit tests [getById] function in recommendationService", () => {
   it("should pass to get recommendation by id", async () => {
     const id = 999;
     jest
@@ -62,5 +62,17 @@ describe("Unit tests getById function in recommendationService", () => {
     } catch (err) {
       expect(err.type).toBe("not_found");
     }
+  });
+});
+
+describe("Unit tests [get] function in recommendationService", () => {
+  it("should pass to get all recommendations", async () => {
+    jest
+      .spyOn(recommendationRepository, "findAll")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    const result = await recommendationService.get();
+    expect(result).toBe(true);
   });
 });
