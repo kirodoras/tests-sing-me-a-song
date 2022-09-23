@@ -73,8 +73,8 @@ describe("Unit tests [get] function in recommendationService", () => {
       .mockImplementationOnce((): any => {
         return true;
       });
-    const result = await recommendationService.get();
-    expect(result).toBe(true);
+    await recommendationService.get();
+    expect(recommendationRepository.findAll).toBeCalled();
   });
 });
 
