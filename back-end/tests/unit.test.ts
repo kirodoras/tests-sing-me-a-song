@@ -153,3 +153,16 @@ describe("Unit tests [getRandom] function in recommendationService", () => {
     }
   });
 });
+
+describe("Unit tests [getScoreFilter] function in recommendationService", () => {
+  it("should pass to return gt", async () => {
+    const random = 0.6;
+    const result = recommendationService.getScoreFilter(random);
+    expect(result).toBe("gt");
+  });
+  it("should pass to return lte", async () => {
+    const random = 0.8;
+    const result = recommendationService.getScoreFilter(random);
+    expect(result).toBe("lte");
+  });
+});
