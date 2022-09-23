@@ -39,6 +39,42 @@ describe("Unit tests [insert] function in recommendationService", () => {
   });
 });
 
+describe("Unit tests [upvote] function in recommendationService", () => {
+  it("should pass to upvote", async () => {
+    const id = 999;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    jest
+      .spyOn(recommendationRepository, "updateScore")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    await recommendationService.upvote(id);
+    expect(recommendationRepository.updateScore).toBeCalled();
+  });
+  it("should pass to fail upvote", async () => {
+    const id = 999;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return false;
+      });
+    jest
+      .spyOn(recommendationRepository, "updateScore")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    try {
+      await recommendationService.upvote(id);
+    } catch (err) {
+      expect(err.type).toBe("not_found");
+    }
+  });
+});
+
 describe("Unit tests [getById] function in recommendationService", () => {
   it("should pass to get recommendation by id", async () => {
     const recommendation = fakerRecommendations.correct;
