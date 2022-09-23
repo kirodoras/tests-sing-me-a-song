@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Recommendation } from "@prisma/client";
 import { recommendationRepository } from "../repositories/recommendationRepository.js";
 import { conflictError, notFoundError } from "../utils/errorUtils.js";
@@ -53,7 +54,8 @@ async function getRandom() {
   const scoreFilter = getScoreFilter(random);
 
   const recommendations = await getByScore(scoreFilter);
-  if (recommendations.length === 0) {
+  const reco: any = recommendations;
+  if (recommendations?.length === 0 || reco === undefined) {
     throw notFoundError();
   }
 

@@ -126,3 +126,30 @@ describe("Unit tests [getTop] function in recommendationService", () => {
     expect(recommendationRepository.getAmountByScore).toBeCalled();
   });
 });
+
+describe("Unit tests [getRandom] function in recommendationService", () => {
+  it("should pass to get a random recommendation", async () => {
+    const recommendation = fakerRecommendations.correct;
+    const arrayTest = [recommendation, recommendation, recommendation];
+    jest
+      .spyOn(recommendationRepository, "findAll")
+      .mockImplementationOnce((): any => {
+        return arrayTest;
+      });
+    const promise = await recommendationService.getRandom();
+    expect(promise).toBe(recommendation);
+  });
+  it("should pass to error 404, not found", async () => {
+    const arrayTest = [];
+    jest
+      .spyOn(recommendationRepository, "findAll")
+      .mockImplementationOnce((): any => {
+        return arrayTest;
+      });
+    try {
+      await recommendationService.getRandom();
+    } catch (err) {
+      expect(err.type).toBe("not_found");
+    }
+  });
+});
