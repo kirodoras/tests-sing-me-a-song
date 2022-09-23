@@ -41,21 +41,22 @@ describe("Unit tests [insert] function in recommendationService", () => {
 
 describe("Unit tests [getById] function in recommendationService", () => {
   it("should pass to get recommendation by id", async () => {
+    const recommendation = fakerRecommendations.correct;
     const id = 999;
     jest
       .spyOn(recommendationRepository, "find")
       .mockImplementationOnce((): any => {
-        return true;
+        return recommendation;
       });
     const result = await recommendationService.getById(id);
-    expect(result).toBe(true);
+    expect(result).toEqual(recommendation);
   });
   it("should pass to fail in get recommendation by id", async () => {
     const id = 999;
     jest
       .spyOn(recommendationRepository, "find")
       .mockImplementationOnce((): any => {
-        return false;
+        return null;
       });
     try {
       await recommendationService.getById(id);
