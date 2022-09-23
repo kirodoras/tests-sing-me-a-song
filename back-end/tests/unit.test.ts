@@ -86,7 +86,7 @@ describe("Unit tests [getTop] function in recommendationService", () => {
       .mockImplementationOnce((): any => {
         return true;
       });
-    const result = await recommendationService.getTop(amount);
-    expect(result).toBe(true);
+    await recommendationService.getTop(amount);
+    expect(recommendationRepository.getAmountByScore).toBeCalled();
   });
 });
