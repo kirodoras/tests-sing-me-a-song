@@ -21,8 +21,8 @@ describe("Unit tests [insert] function in recommendationService", () => {
       .mockImplementationOnce(async () => {
         recommendation;
       });
-    const result = await recommendationService.insert(recommendation);
-    expect(result).toBe(undefined);
+    await recommendationService.insert(recommendation);
+    expect(recommendationRepository.create).toBeCalled();
   });
   it("should pass to error 409, conflict", async () => {
     const recommendation = fakerRecommendations.correct;
