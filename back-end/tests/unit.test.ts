@@ -75,6 +75,66 @@ describe("Unit tests [upvote] function in recommendationService", () => {
   });
 });
 
+describe("Unit tests [downvote] function in recommendationService", () => {
+  it("should pass to downvote", async () => {
+    const id = 999;
+    const score = 5;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    jest
+      .spyOn(recommendationRepository, "updateScore")
+      .mockImplementationOnce((): any => {
+        return { score };
+      });
+    await recommendationService.downvote(id);
+    expect(recommendationRepository.updateScore).toBeCalled();
+  });
+  it("should pass to fail downvote", async () => {
+    const id = 999;
+    const score = 5;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return false;
+      });
+    jest
+      .spyOn(recommendationRepository, "updateScore")
+      .mockImplementationOnce((): any => {
+        return { score };
+      });
+    try {
+      await recommendationService.downvote(id);
+    } catch (err) {
+      expect(err.type).toBe("not_found");
+    }
+  });
+  it("should pass to downvote and delete by id", async () => {
+    const id = 999;
+    const score = -6;
+    jest
+      .spyOn(recommendationRepository, "find")
+      .mockImplementationOnce((): any => {
+        return true;
+      });
+    jest
+      .spyOn(recommendationRepository, "updateScore")
+      .mockImplementationOnce((): any => {
+        return { score };
+      });
+      jest
+      .spyOn(recommendationRepository, "remove")
+      .mockImplementationOnce((): any => {
+        return {};
+      });
+    await recommendationService.downvote(id);
+    expect(recommendationRepository.remove).toBeCalled();
+    expect(recommendationRepository.updateScore).toBeCalled();
+  });
+});
+
 describe("Unit tests [getById] function in recommendationService", () => {
   it("should pass to get recommendation by id", async () => {
     const recommendation = fakerRecommendations.correct;
