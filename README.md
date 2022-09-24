@@ -44,7 +44,7 @@
 <!-- Description -->
 # Description
 
-Sing is an application for anonymous music me. The more people enjoy a chance, the more likely it is to be recommended to others.
+Sing me a song, is an application for anonymous music me. The more people enjoy a chance, the more likely it is to be recommended to others.
 The purpose of this project is precisely to do unit, integration and e2e tests.
 
 <!-- Getting Started Back end-->
